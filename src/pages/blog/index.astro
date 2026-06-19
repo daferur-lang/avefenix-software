@@ -1,0 +1,78 @@
+---
+import BaseLayout from '@/components/layout/BaseLayout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import { formatDate } from '@/lib/utils';
+
+const posts = [
+  { _id: 'p1', title: '5 señales de que tu web necesita una renovación urgente', slug: { current: '5-senales-web-renovacion' }, excerpt: 'Si tu web tarda más de 3 segundos en cargar o no se ve bien en móvil, estás perdiendo clientes cada día. Te explicamos las señales clave.', category: 'Desarrollo' as const, publishedAt: '2026-05-15', readTime: 5 },
+  { _id: 'p2', title: 'Cómo automatizamos el 80% de las tareas de una gestoría en 2 semanas', slug: { current: 'automatizacion-gestoria-caso-real' }, excerpt: 'Caso real: de 20 horas semanales de trabajo manual a 4. Te contamos qué hicimos y cómo puedes replicarlo en tu negocio.', category: 'Automatización' as const, publishedAt: '2026-04-28', readTime: 7 },
+  { _id: 'p3', title: 'SEO para PYMEs: los 10 errores que comete el 90% de las empresas', slug: { current: 'seo-pymes-10-errores' }, excerpt: 'La mayoría de las PYMEs cometen los mismos errores de SEO. Aprende a evitarlos con esta guía práctica y gratuita.', category: 'SEO' as const, publishedAt: '2026-04-10', readTime: 8 },
+  { _id: 'p4', title: 'Por qué tu empresa necesita software a medida (y cuándo no)', slug: { current: 'software-medida-cuando' }, excerpt: 'No todo negocio necesita software personalizado. Te explicamos cuándo tiene sentido invertir y cuándo no.', category: 'Negocio' as const, publishedAt: '2026-03-22', readTime: 6 },
+];
+---
+
+<BaseLayout
+  title="Blog"
+  description="Artículos sobre desarrollo web, software, automatizaciones y SEO para empresas que quieren crecer con tecnología."
+>
+  <section class="page-hero">
+    <div class="section-container">
+      <p class="page-eyebrow">Conocimiento</p>
+      <h1 class="page-title gradient-text">BLOG</h1>
+      <p class="page-subtitle">
+        Artículos prácticos sobre tecnología, SEO y automatización. Sin humo, con resultados.
+      </p>
+    </div>
+  </section>
+
+  <section class="blog-section">
+    <div class="section-container">
+      <div class="posts-grid">
+        {posts.map((post) => (
+          <a href={`/blog/${post.slug.current}`} class="post-card">
+            <div class="post-meta">
+              <Badge variant="fire">{post.category}</Badge>
+              <span class="read-time">{post.readTime} min de lectura</span>
+            </div>
+            <h2 class="post-title">{post.title}</h2>
+            <p class="post-excerpt">{post.excerpt}</p>
+            <footer class="post-footer">
+              <time datetime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+              <span class="read-more">Leer artículo →</span>
+            </footer>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero { padding: 10rem 0 5rem; background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(154, 52, 18, 0.2) 0%, transparent 60%); text-align: center; }
+  .page-eyebrow { font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; color: var(--phoenix-fire); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem; }
+  .page-title { font-size: clamp(3rem, 10vw, 7rem); margin-bottom: 1.5rem; }
+  .page-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+  .blog-section { padding: 4rem 0 7rem; }
+
+  .posts-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 768px) { .posts-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .post-card {
+    display: flex; flex-direction: column; gap: 1rem;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+  }
+  .post-card:hover { border-color: var(--phoenix-ember); box-shadow: var(--shadow-glow-sm); transform: translateY(-3px); }
+
+  .post-meta { display: flex; align-items: center; justify-content: space-between; }
+  .read-time { font-family: var(--font-ui); font-size: 0.75rem; color: var(--text-muted); }
+  .post-title { font-family: var(--font-ui); font-size: 1.15rem; font-weight: 700; color: var(--text-primary); line-height: 1.4; flex: 1; }
+  .post-excerpt { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; }
+  .post-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.8rem; }
+  time { color: var(--text-muted); font-family: var(--font-ui); }
+  .read-more { color: var(--phoenix-fire); font-family: var(--font-ui); font-weight: 600; font-size: 0.85rem; }
+  .post-card:hover .read-more { color: var(--phoenix-gold); }
+</style>

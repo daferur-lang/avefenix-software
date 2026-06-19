@@ -1,0 +1,48 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: extraClass = '' } = Astro.props;
+---
+
+<div class={`fire-divider ${extraClass}`} aria-hidden="true">
+  <svg viewBox="0 0 800 8" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 4 Q200 0 400 4 Q600 8 800 4" stroke="url(#fire-grad)" stroke-width="2" stroke-linecap="round" class="fire-path"/>
+    <defs>
+      <linearGradient id="fire-grad" x1="0" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#9A3412" stop-opacity="0"/>
+        <stop offset="25%"  stop-color="#EA580C"/>
+        <stop offset="50%"  stop-color="#FCD34D"/>
+        <stop offset="75%"  stop-color="#EA580C"/>
+        <stop offset="100%" stop-color="#9A3412" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+  </svg>
+</div>
+
+<style>
+  .fire-divider {
+    width: 100%;
+    height: 8px;
+    margin: 1rem 0;
+  }
+
+  .fire-divider svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .fire-path {
+    stroke-dasharray: 800;
+    stroke-dashoffset: 800;
+    animation: fireLine 1.2s ease forwards;
+  }
+
+  @keyframes fireLine {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fire-path { animation: none; stroke-dashoffset: 0; }
+  }
+</style>

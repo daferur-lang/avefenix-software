@@ -1,0 +1,180 @@
+---
+import BaseLayout from '@/components/layout/BaseLayout.astro';
+import CTA from '@/components/sections/CTA.astro';
+import type { Project } from '@/types/portfolio';
+
+// Placeholder hasta conectar Sanity
+const projects: (Omit<Project, '_id' | 'slug' | 'gallery'> & { _id: string; slug: { current: string } })[] = [
+  { _id: '1', title: 'Plataforma clínica dental', slug: { current: 'clinica-dental' }, description: 'Sistema de gestión de citas, historial clínico y facturación para clínica con 3 sedes en Madrid.', coverImage: { asset: { url: '' }, alt: '' }, category: 'Software', technologies: ['Next.js', 'Supabase', 'TypeScript', 'Stripe'], featured: true, order: 1, url: undefined },
+  { _id: '2', title: 'Landing page reformas +40% conversión', slug: { current: 'reformas-landing' }, description: 'Rediseño completo de landing. Resultado: 40% más de leads en los primeros 30 días.', coverImage: { asset: { url: '' }, alt: '' }, category: 'Web', technologies: ['Astro', 'Tailwind', 'Framer Motion'], featured: true, order: 2, url: undefined },
+  { _id: '3', title: 'Automatización facturación gestoría', slug: { current: 'automatizacion-gestoria' }, description: 'De 20h semanales de trabajo manual a 4h. Generación de facturas, recordatorios y reportes automáticos.', coverImage: { asset: { url: '' }, alt: '' }, category: 'Automatización', technologies: ['n8n', 'Google Sheets', 'Resend'], featured: true, order: 3, url: undefined },
+  { _id: '4', title: 'E-commerce moda sostenible', slug: { current: 'ecommerce-moda' }, description: 'Tienda online con más de 500 referencias, gestión de stock en tiempo real y checkout optimizado.', coverImage: { asset: { url: '' }, alt: '' }, category: 'Web', technologies: ['Shopify', 'Liquid', 'Klaviyo'], featured: false, order: 4, url: undefined },
+  { _id: '5', title: 'Auditoría SEO empresa industrial', slug: { current: 'seo-industrial' }, description: 'De posición 45 a top 5 para 12 keywords clave en 4 meses. +320% tráfico orgánico.', coverImage: { asset: { url: '' }, alt: '' }, category: 'SEO', technologies: ['Screaming Frog', 'Ahrefs', 'Google Search Console'], featured: false, order: 5, url: undefined },
+  { _id: '6', title: 'CRM inmobiliaria a medida', slug: { current: 'crm-inmobiliaria' }, description: 'Sistema de gestión de propiedades, clientes y visitas con integración con portales inmobiliarios.', coverImage: { asset: { url: '' }, alt: '' }, category: 'Software', technologies: ['React', 'Node.js', 'PostgreSQL'], featured: false, order: 6, url: undefined },
+];
+
+const categories = ['Todos', 'Web', 'Software', 'Automatización', 'SEO'] as const;
+---
+
+<BaseLayout
+  title="Portfolio"
+  description="Proyectos reales con resultados medibles. Desarrollo web, software a medida, automatizaciones y SEO."
+>
+  <section class="page-hero">
+    <div class="section-container">
+      <p class="page-eyebrow">Nuestro trabajo</p>
+      <h1 class="page-title gradient-text">PORTFOLIO</h1>
+      <p class="page-subtitle">
+        Proyectos reales. Clientes reales. Resultados medibles.
+      </p>
+    </div>
+  </section>
+
+  <section class="portfolio-section">
+    <div class="section-container">
+      <!-- Filtros -->
+      <div class="filters" role="tablist" aria-label="Filtrar por categoría">
+        {categories.map((cat) => (
+          <button
+            class="filter-btn"
+            data-category={cat}
+            role="tab"
+            aria-selected={cat === 'Todos' ? 'true' : 'false'}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      <!-- Grid -->
+      <div class="projects-grid" id="projects-grid">
+        {projects.map((project) => (
+          <article
+            class="project-card"
+            data-category={project.category}
+          >
+            <div class="project-image">
+              {project.coverImage?.asset?.url ? (
+                <img src={project.coverImage.asset.url} alt={project.coverImage.alt} width="600" height="380" loading="lazy" />
+              ) : (
+                <div class="project-placeholder" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25">
+                    <rect width="18" height="18" x="3" y="3" rx="2"/>
+                    <path d="m3 9 4-4 4 4 4-4 4 4"/>
+                  </svg>
+                </div>
+              )}
+              <span class="category-badge">{project.category}</span>
+            </div>
+            <div class="project-info">
+              <h3 class="project-title">{project.title}</h3>
+              <p class="project-desc">{project.description}</p>
+              <div class="project-techs">
+                {project.technologies.map((t) => (
+                  <span class="tech-tag">{t}</span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: 10rem 0 5rem;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(154, 52, 18, 0.2) 0%, transparent 60%);
+    text-align: center;
+  }
+  .page-eyebrow { font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; color: var(--phoenix-fire); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem; }
+  .page-title { font-size: clamp(3rem, 10vw, 7rem); margin-bottom: 1.5rem; }
+  .page-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+  .portfolio-section { padding: 4rem 0 7rem; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 3rem; }
+
+  .filter-btn {
+    padding: 0.5rem 1.25rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .filter-btn[aria-selected="true"],
+  .filter-btn:hover {
+    background: rgba(234, 88, 12, 0.1);
+    border-color: var(--phoenix-fire);
+    color: var(--phoenix-fire);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 640px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .project-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  }
+  .project-card:hover { border-color: var(--phoenix-ember); box-shadow: var(--shadow-glow-sm); transform: translateY(-4px); }
+  .project-card.hidden { display: none; }
+
+  .project-image {
+    position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--bg-surface);
+  }
+  .project-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .project-card:hover .project-image img { transform: scale(1.04); }
+
+  .project-placeholder {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--bg-surface), var(--bg-card)); color: var(--text-muted);
+  }
+
+  .category-badge {
+    position: absolute; top: 1rem; left: 1rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(234, 88, 12, 0.15); color: var(--phoenix-fire);
+    border: 1px solid rgba(234, 88, 12, 0.3);
+    border-radius: 100px;
+    font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600;
+  }
+
+  .project-info { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+  .project-title { font-family: var(--font-ui); font-size: 1rem; font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+  .project-desc { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; }
+  .project-techs { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tech-tag { font-family: var(--font-ui); font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.6rem; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 100px; color: var(--text-muted); }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const cards   = document.querySelectorAll<HTMLElement>('.project-card');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const category = btn.dataset.category ?? 'Todos';
+
+      buttons.forEach((b) => b.setAttribute('aria-selected', 'false'));
+      btn.setAttribute('aria-selected', 'true');
+
+      cards.forEach((card) => {
+        const match = category === 'Todos' || card.dataset.category === category;
+        card.classList.toggle('hidden', !match);
+      });
+    });
+  });
+</script>

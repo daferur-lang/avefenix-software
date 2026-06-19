@@ -1,0 +1,173 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+
+const testimonios = [
+  {
+    name:    'María García',
+    role:    'CEO',
+    company: 'Reformas García',
+    text:    'Contratamos a Avefenix para rediseñar nuestra web y los resultados fueron inmediatos. En el primer mes triplicamos las consultas. El equipo es rápido, profesional y realmente entiende lo que necesitas.',
+    avatar:  'MG',
+  },
+  {
+    name:    'Carlos Rodríguez',
+    role:    'Fundador',
+    company: 'TechStartup Barcelona',
+    text:    'Necesitábamos automatizar nuestro proceso de onboarding y Avefenix lo resolvió en tiempo récord. Ahora procesamos 10 veces más clientes sin contratar a nadie nuevo. ROI brutal.',
+    avatar:  'CR',
+  },
+  {
+    name:    'Laura Martínez',
+    role:    'Directora de Marketing',
+    company: 'Clínica Dental Premium',
+    text:    'El software de gestión que desarrollaron para nosotros cambió completamente cómo trabajamos. Cero papel, cero errores. Y la atención postventa es excepcional.',
+    avatar:  'LM',
+  },
+];
+---
+
+<section class="testimonios-section" id="testimonios">
+  <div class="section-container">
+    <SectionHeader
+      eyebrow="Lo que dicen"
+      title="CLIENTES"
+      subtitle="No lo decimos nosotros. Lo dicen ellos."
+      center
+    />
+
+    <div class="testimonios-grid">
+      {testimonios.map((t, i) => (
+        <blockquote class="testimonio-card reveal-testimonio" style={`--delay: ${i * 0.15}s`}>
+          <!-- Stars -->
+          <div class="stars" aria-label="5 de 5 estrellas">
+            {[...Array(5)].map(() => (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            ))}
+          </div>
+
+          <p class="testimonio-text">"{t.text}"</p>
+
+          <footer class="testimonio-author">
+            <div class="avatar" aria-hidden="true">{t.avatar}</div>
+            <div>
+              <cite class="author-name">{t.name}</cite>
+              <span class="author-role">{t.role} · {t.company}</span>
+            </div>
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonios-section {
+    padding: 7rem 0;
+    background: radial-gradient(ellipse 50% 50% at 50% 100%, rgba(154, 52, 18, 0.08) 0%, transparent 60%);
+  }
+
+  .testimonios-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .testimonios-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .testimonio-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s ease;
+    transition-delay: var(--delay, 0s);
+  }
+
+  .testimonio-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .testimonio-card:hover {
+    border-color: var(--phoenix-ember);
+  }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+    color: var(--phoenix-gold);
+  }
+
+  .testimonio-text {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-style: italic;
+    flex: 1;
+  }
+
+  .testimonio-author {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--gradient-phoenix);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--bg-void);
+    flex-shrink: 0;
+  }
+
+  .author-name {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-style: normal;
+  }
+
+  .author-role {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('.reveal-testimonio').forEach((el) => observer.observe(el));
+</script>

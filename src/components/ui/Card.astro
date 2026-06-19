@@ -1,0 +1,39 @@
+---
+interface Props {
+  href?:  string;
+  class?: string;
+  glow?:  boolean;
+}
+
+const { href, class: extraClass = '', glow = true } = Astro.props;
+const classes = ['card', glow && 'card--glow', extraClass].filter(Boolean).join(' ');
+---
+
+{href ? (
+  <a href={href} class={classes}>
+    <slot />
+  </a>
+) : (
+  <div class={classes}>
+    <slot />
+  </div>
+)}
+
+<style>
+  .card {
+    display: block;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .card--glow:hover {
+    border-color: var(--phoenix-ember);
+    box-shadow: var(--shadow-glow-sm);
+    transform: translateY(-3px);
+  }
+</style>

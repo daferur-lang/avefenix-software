@@ -1,0 +1,96 @@
+---
+import Button from '@/components/ui/Button.astro';
+---
+
+<section class="cta-section" aria-labelledby="cta-title">
+  <div class="section-container cta-inner">
+    <div class="cta-glow" aria-hidden="true"></div>
+
+    <p class="cta-eyebrow">¿Listo para empezar?</p>
+    <h2 id="cta-title" class="cta-title">
+      HAGAMOS ALGO<br/>
+      INCREÍBLE JUNTOS
+    </h2>
+    <p class="cta-text">
+      Cuéntanos tu proyecto. En menos de 24 horas tendrás una propuesta inicial.
+    </p>
+
+    <div class="cta-actions">
+      <Button href="/contacto" size="lg">Contactar ahora</Button>
+      <a href="mailto:daferur@gmail.com" class="cta-email">
+        o escríbenos a daferur@gmail.com
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding: 7rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .cta-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(234, 88, 12, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cta-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--phoenix-fire);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  .cta-title {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    line-height: 0.95;
+    color: var(--text-primary);
+  }
+
+  .cta-text {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 440px;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .cta-email {
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .cta-email:hover {
+    color: var(--phoenix-fire);
+  }
+</style>

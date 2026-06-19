@@ -1,0 +1,233 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import type { Project } from '@/types/portfolio';
+
+interface Props {
+  projects?: Project[];
+}
+
+const { projects } = Astro.props;
+
+// Placeholder data hasta conectar Sanity
+const placeholder: Omit<Project, '_id' | 'slug' | 'gallery' | 'order'>[] = [
+  {
+    title: 'Plataforma de gestión para clínica dental',
+    description: 'Sistema de citas, historial de pacientes y facturación automatizada para una clínica con 3 sedes.',
+    coverImage: { asset: { url: '' }, alt: 'Plataforma clínica dental' },
+    category: 'Software',
+    technologies: ['Next.js', 'Supabase', 'TypeScript'],
+    featured: true,
+  },
+  {
+    title: 'Landing page con +40% de conversión',
+    description: 'Rediseño completo de landing page para empresa de reformas. Resultado: 40% más de leads en 30 días.',
+    coverImage: { asset: { url: '' }, alt: 'Landing page reformas' },
+    category: 'Web',
+    technologies: ['Astro', 'Tailwind', 'Framer Motion'],
+    featured: true,
+  },
+  {
+    title: 'Automatización de facturación y reportes',
+    description: 'Flujo automático que genera facturas, envía recordatorios y produce reportes semanales sin intervención manual.',
+    coverImage: { asset: { url: '' }, alt: 'Automatización facturación' },
+    category: 'Automatización',
+    technologies: ['n8n', 'Google Sheets', 'Resend'],
+    featured: true,
+  },
+];
+
+const displayProjects = projects?.length ? projects : placeholder;
+
+const categoryColors: Record<string, 'fire' | 'muted' | 'outline'> = {
+  Web:           'fire',
+  Software:      'outline',
+  Automatización: 'muted',
+  SEO:           'muted',
+};
+---
+
+<section class="portfolio-preview" id="portfolio">
+  <div class="section-container">
+    <SectionHeader
+      eyebrow="Nuestro trabajo"
+      title="PORTFOLIO"
+      subtitle="Proyectos reales. Resultados medibles. Clientes satisfechos."
+    />
+
+    <div class="projects-grid">
+      {displayProjects.map((project, i) => (
+        <article class="project-card reveal-project" style={`--delay: ${i * 0.15}s`}>
+          <div class="project-image">
+            {project.coverImage?.asset?.url ? (
+              <img
+                src={project.coverImage.asset.url}
+                alt={project.coverImage.alt}
+                width="600"
+                height="380"
+                loading="lazy"
+              />
+            ) : (
+              <div class="project-placeholder" aria-hidden="true">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
+                  <rect width="18" height="18" x="3" y="3" rx="2"/><path d="m3 9 4-4 4 4 4-4 4 4"/>
+                </svg>
+              </div>
+            )}
+            <div class="project-overlay">
+              <Badge variant={categoryColors[project.category] ?? 'muted'}>{project.category}</Badge>
+            </div>
+          </div>
+
+          <div class="project-info">
+            <h3 class="project-title">{project.title}</h3>
+            <p class="project-desc">{project.description}</p>
+            <div class="project-techs" aria-label="Tecnologías usadas">
+              {project.technologies.map((tech) => (
+                <span class="tech-tag">{tech}</span>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="portfolio-cta">
+      <Button href="/portfolio" variant="ghost" size="lg">Ver portfolio completo →</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .portfolio-preview {
+    padding: 7rem 0;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition-delay: var(--delay, 0s);
+  }
+
+  .project-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .project-card:hover {
+    border-color: var(--phoenix-ember);
+    box-shadow: var(--shadow-glow-sm);
+    transform: translateY(-4px);
+  }
+
+  .project-image {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    background: var(--bg-surface);
+  }
+
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .project-card:hover .project-image img {
+    transform: scale(1.03);
+  }
+
+  .project-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--bg-surface), var(--bg-card));
+    color: var(--text-muted);
+  }
+
+  .project-overlay {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+  }
+
+  .project-info {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .project-title {
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+
+  .project-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .project-techs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.25rem;
+  }
+
+  .tech-tag {
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--text-muted);
+  }
+
+  .portfolio-cta {
+    margin-top: 3rem;
+    text-align: center;
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('.reveal-project').forEach((el) => observer.observe(el));
+</script>

@@ -1,0 +1,145 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import FireDivider from '@/components/ui/FireDivider.astro';
+
+const steps = [
+  {
+    number: '01',
+    title: 'Descubrimiento',
+    description: 'Nos reunimos para entender tu negocio, tus objetivos y el problema que queremos resolver. Sin formularios genéricos — escuchamos.',
+  },
+  {
+    number: '02',
+    title: 'Diseño y estrategia',
+    description: 'Diseñamos la solución: arquitectura, prototipos visuales y plan de acción. Lo ves antes de que se escriba la primera línea de código.',
+  },
+  {
+    number: '03',
+    title: 'Desarrollo',
+    description: 'Construimos con calidad y transparencia. Tienes acceso al progreso en tiempo real y feedback en cada etapa del proceso.',
+  },
+  {
+    number: '04',
+    title: 'Entrega y soporte',
+    description: 'Entregamos, enseñamos y acompañamos. El proyecto es tuyo — y si necesitas algo más, estamos a un mensaje.',
+  },
+];
+---
+
+<section class="proceso-section" id="proceso">
+  <div class="section-container">
+    <SectionHeader
+      eyebrow="Cómo trabajamos"
+      title="PROCESO"
+      subtitle="Cuatro pasos pensados para que siempre sepas dónde estamos y qué esperar."
+      center
+    />
+
+    <div class="steps" role="list">
+      {steps.map((step, i) => (
+        <div class="step reveal-step" role="listitem" style={`--delay: ${i * 0.15}s`}>
+          <div class="step-number" aria-hidden="true">{step.number}</div>
+          <div class="step-content">
+            <h3 class="step-title">{step.title}</h3>
+            <p class="step-desc">{step.description}</p>
+          </div>
+          {i < steps.length - 1 && (
+            <div class="step-connector" aria-hidden="true">
+              <FireDivider />
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .proceso-section {
+    padding: 7rem 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(154, 52, 18, 0.06) 0%, transparent 70%);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  @media (min-width: 768px) {
+    .steps {
+      grid-template-columns: repeat(4, 1fr);
+      align-items: start;
+    }
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition-delay: var(--delay, 0s);
+    position: relative;
+  }
+
+  .step.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .step-number {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    line-height: 1;
+    background: var(--gradient-phoenix);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+  }
+
+  .step-title {
+    font-family: var(--font-ui);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .step-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .step-connector {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .step-connector {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('.reveal-step').forEach((el) => observer.observe(el));
+</script>

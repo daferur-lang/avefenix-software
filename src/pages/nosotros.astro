@@ -1,0 +1,190 @@
+---
+import BaseLayout from '@/components/layout/BaseLayout.astro';
+import CTA from '@/components/sections/CTA.astro';
+
+const valores = [
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    title:       'Transparencia',
+    description: 'Precios claros desde el primer día. Sabes exactamente qué estás pagando y por qué.',
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
+    title:       'Velocidad',
+    description: 'Entregamos rápido sin sacrificar calidad. El tiempo de tu negocio tiene valor.',
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    title:       'Compromiso',
+    description: 'No desaparecemos al entregar. Estamos cuando nos necesitas, después del lanzamiento también.',
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+    title:       'Resultados',
+    description: 'Medimos el éxito con datos, no con opiniones. Cada decisión técnica tiene un objetivo de negocio.',
+  },
+];
+---
+
+<BaseLayout
+  title="Nosotros"
+  description="Conoce a Avefenix Software. Una agencia tech española comprometida con transformar negocios con tecnología de calidad."
+>
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="section-container">
+      <p class="page-eyebrow">Quiénes somos</p>
+      <h1 class="page-title gradient-text">NOSOTROS</h1>
+    </div>
+  </section>
+
+  <!-- Historia -->
+  <section class="historia-section">
+    <div class="section-container historia-grid">
+      <div class="historia-content">
+        <h2>De la frustración a la solución</h2>
+        <p>
+          Avefenix nació de una observación simple: demasiadas empresas pagaban fortunas por webs mediocres, software que no funcionaba y "expertos" que desaparecían al cobrar.
+        </p>
+        <p>
+          Creamos Avefenix Software con una misión clara: construir tecnología que de verdad transforme negocios. Como el ave fénix, ayudamos a las empresas a renacer digitalmente — más fuertes, más eficientes, más visibles.
+        </p>
+        <p>
+          No somos una agencia de 50 personas que te pasa a un junior. Somos un equipo pequeño y comprometido donde cada proyecto recibe atención real.
+        </p>
+      </div>
+      <div class="historia-stats" aria-label="Estadísticas">
+        <div class="stat">
+          <span class="stat-number gradient-text">+50</span>
+          <span class="stat-label">Proyectos entregados</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number gradient-text">98%</span>
+          <span class="stat-label">Clientes satisfechos</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number gradient-text">3+</span>
+          <span class="stat-label">Años de experiencia</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number gradient-text">24h</span>
+          <span class="stat-label">Tiempo de respuesta</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Valores -->
+  <section class="valores-section">
+    <div class="section-container">
+      <p class="section-eyebrow">Lo que nos define</p>
+      <h2 class="section-h2">VALORES</h2>
+      <div class="valores-grid">
+        {valores.map((v) => (
+          <div class="valor-card">
+            <div class="valor-icon" aria-hidden="true" set:html={v.icon} />
+            <h3>{v.title}</h3>
+            <p>{v.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: 10rem 0 5rem;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(154, 52, 18, 0.2) 0%, transparent 60%);
+    text-align: center;
+  }
+
+  .page-eyebrow {
+    font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600;
+    color: var(--phoenix-fire); text-transform: uppercase; letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+  }
+
+  .page-title { font-size: clamp(3rem, 10vw, 7rem); margin-bottom: 1.5rem; }
+
+  .historia-section { padding: 6rem 0; }
+
+  .historia-grid {
+    display: grid; grid-template-columns: 1fr; gap: 4rem;
+  }
+
+  @media (min-width: 1024px) {
+    .historia-grid { grid-template-columns: 1.5fr 1fr; align-items: center; }
+  }
+
+  .historia-content { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .historia-content h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--text-primary);
+  }
+
+  .historia-content p { font-size: 1rem; color: var(--text-secondary); line-height: 1.75; }
+
+  .historia-stats {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+  }
+
+  .stat {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.75rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: var(--font-display); font-size: 3rem; line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--font-ui); font-size: 0.8rem;
+    color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  .valores-section { padding: 6rem 0; }
+
+  .section-eyebrow {
+    font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600;
+    color: var(--phoenix-fire); text-transform: uppercase; letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text-primary);
+    margin-bottom: 3rem;
+  }
+
+  .valores-grid {
+    display: grid; grid-template-columns: 1fr; gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) { .valores-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .valor-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.75rem;
+    display: flex; flex-direction: column; gap: 0.875rem;
+    transition: border-color 0.3s ease;
+  }
+
+  .valor-card:hover { border-color: var(--phoenix-ember); }
+
+  .valor-icon {
+    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+    background: rgba(234, 88, 12, 0.1); border: 1px solid rgba(234, 88, 12, 0.2);
+    border-radius: var(--radius-md); color: var(--phoenix-fire);
+  }
+
+  .valor-card h3 {
+    font-family: var(--font-ui); font-size: 1rem; font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .valor-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; }
+</style>

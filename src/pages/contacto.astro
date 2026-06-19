@@ -1,0 +1,180 @@
+---
+import BaseLayout from '@/components/layout/BaseLayout.astro';
+import ContactForm from '@/components/forms/ContactForm';
+
+const contactInfo = [
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`,
+    label: 'Email',
+    value: 'daferur@gmail.com',
+    href:  'mailto:daferur@gmail.com',
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.55 3.27a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
+    label: 'Respuesta en',
+    value: 'Menos de 24 horas',
+    href:  undefined,
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
+    label: 'Dónde',
+    value: 'España — trabajamos en remoto',
+    href:  undefined,
+  },
+];
+---
+
+<BaseLayout
+  title="Contacto"
+  description="Cuéntanos tu proyecto. En menos de 24 horas tendrás una propuesta de Avefenix Software."
+>
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="section-container">
+      <p class="page-eyebrow">Hablemos</p>
+      <h1 class="page-title gradient-text">CONTACTO</h1>
+      <p class="page-subtitle">
+        Cuéntanos qué necesitas. En menos de 24 horas te respondemos con una propuesta inicial.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contacto grid -->
+  <section class="contact-section">
+    <div class="section-container contact-grid">
+      <!-- Info lateral -->
+      <aside class="contact-info">
+        <h2>¿Hablamos?</h2>
+        <p>
+          No necesitas tenerlo todo claro. Con una idea básica es suficiente para que te demos una primera orientación.
+        </p>
+
+        <div class="info-items">
+          {contactInfo.map((item) => (
+            <div class="info-item">
+              <div class="info-icon" aria-hidden="true" set:html={item.icon} />
+              <div>
+                <span class="info-label">{item.label}</span>
+                {item.href ? (
+                  <a href={item.href} class="info-value info-link">{item.value}</a>
+                ) : (
+                  <span class="info-value">{item.value}</span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="contact-promise">
+          <p>Lo que prometemos:</p>
+          <ul>
+            <li>✓ Respuesta en menos de 24 horas</li>
+            <li>✓ Presupuesto sin compromiso</li>
+            <li>✓ Precios transparentes desde el primer momento</li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Formulario -->
+      <div class="contact-form-wrapper">
+        <ContactForm client:load />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: 10rem 0 4rem;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(154, 52, 18, 0.2) 0%, transparent 60%);
+    text-align: center;
+  }
+
+  .page-eyebrow {
+    font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600;
+    color: var(--phoenix-fire); text-transform: uppercase; letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+  }
+
+  .page-title { font-size: clamp(3rem, 10vw, 7rem); margin-bottom: 1.5rem; }
+
+  .page-subtitle {
+    font-size: 1.1rem; color: var(--text-secondary);
+    max-width: 480px; margin: 0 auto; line-height: 1.7;
+  }
+
+  .contact-section { padding: 4rem 0 7rem; }
+
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr; gap: 4rem;
+  }
+
+  @media (min-width: 1024px) {
+    .contact-grid { grid-template-columns: 1fr 1.5fr; align-items: start; }
+  }
+
+  .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+
+  .contact-info h2 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--text-primary);
+  }
+
+  .contact-info > p { font-size: 1rem; color: var(--text-secondary); line-height: 1.7; }
+
+  .info-items { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .info-item {
+    display: flex; align-items: flex-start; gap: 0.875rem;
+  }
+
+  .info-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(234, 88, 12, 0.1); border: 1px solid rgba(234, 88, 12, 0.2);
+    border-radius: var(--radius-sm); color: var(--phoenix-fire);
+  }
+
+  .info-label {
+    display: block; font-family: var(--font-ui); font-size: 0.75rem;
+    font-weight: 600; color: var(--text-muted); text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 3px;
+  }
+
+  .info-value {
+    display: block; font-family: var(--font-ui); font-size: 0.95rem;
+    color: var(--text-primary);
+  }
+
+  .info-link {
+    color: var(--phoenix-fire) !important;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .info-link:hover { color: var(--phoenix-gold) !important; }
+
+  .contact-promise {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem;
+  }
+
+  .contact-promise p {
+    font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600;
+    color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 0.875rem;
+  }
+
+  .contact-promise ul {
+    list-style: none; display: flex; flex-direction: column; gap: 0.5rem;
+  }
+
+  .contact-promise li {
+    font-family: var(--font-ui); font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .contact-form-wrapper {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); padding: 2.5rem;
+  }
+</style>

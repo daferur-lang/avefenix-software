@@ -1,0 +1,179 @@
+---
+import Card from '@/components/ui/Card.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Button from '@/components/ui/Button.astro';
+
+const services = [
+  {
+    id: 'web',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>`,
+    title: 'Desarrollo Web',
+    description: 'Páginas web y tiendas online que convierten visitas en clientes. Diseño premium, carga ultrarrápida y optimizadas para aparecer en Google.',
+    bullets: ['Landing pages de alto impacto', 'E-commerce y tiendas online', 'Webs corporativas', 'Blogs y portales de contenido'],
+  },
+  {
+    id: 'software',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+    title: 'Software a Medida',
+    description: 'Aplicaciones web y sistemas a medida que resuelven exactamente el problema de tu negocio. Sin plantillas, sin compromisos.',
+    bullets: ['CRMs y ERPs personalizados', 'Plataformas SaaS', 'APIs y microservicios', 'Paneles de administración'],
+  },
+  {
+    id: 'automatizacion',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`,
+    title: 'Automatizaciones',
+    description: 'Elimina las tareas repetitivas que te consumen tiempo. Conectamos tus herramientas y creamos flujos automáticos para que tu equipo se enfoque en lo que importa.',
+    bullets: ['Automatización con n8n y Make', 'Integraciones entre sistemas', 'Bots y asistentes con IA', 'Reporting automático'],
+  },
+  {
+    id: 'seo',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>`,
+    title: 'Auditoría SEO',
+    description: 'Analizamos tu presencia digital con datos reales y te decimos exactamente qué hacer para posicionarte por encima de tu competencia.',
+    bullets: ['Auditoría técnica completa', 'Análisis de competencia', 'Estrategia de contenido', 'Seguimiento de posiciones'],
+  },
+];
+---
+
+<section class="services-section" id="servicios">
+  <div class="section-container">
+    <SectionHeader
+      eyebrow="Lo que hacemos"
+      title="SERVICIOS"
+      subtitle="Todo lo que tu empresa necesita para crecer en digital. Sin intermediarios, sin sorpresas."
+    />
+
+    <div class="services-grid" role="list">
+      {services.map((service, i) => (
+        <div class="service-wrapper reveal-on-scroll" role="listitem" style={`--delay: ${i * 0.1}s`}>
+          <Card class="service-card">
+            <div class="service-icon" aria-hidden="true" set:html={service.icon} />
+            <h3 class="service-title">{service.title}</h3>
+            <p class="service-desc">{service.description}</p>
+            <ul class="service-bullets" aria-label={`Incluye: ${service.title}`}>
+              {service.bullets.map((b) => (
+                <li>
+                  <span aria-hidden="true">→</span>
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </div>
+      ))}
+    </div>
+
+    <div class="services-cta">
+      <Button href="/servicios" variant="ghost" size="lg">Ver todos los servicios →</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-section {
+    padding: 7rem 0;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .service-wrapper {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition-delay: var(--delay, 0s);
+  }
+
+  .service-wrapper.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .service-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(234, 88, 12, 0.1);
+    border: 1px solid rgba(234, 88, 12, 0.2);
+    border-radius: var(--radius-md);
+    color: var(--phoenix-fire);
+  }
+
+  .service-title {
+    font-family: var(--font-ui);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .service-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .service-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .service-bullets li {
+    display: flex;
+    gap: 0.5rem;
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .service-bullets span {
+    color: var(--phoenix-fire);
+    flex-shrink: 0;
+  }
+
+  .services-cta {
+    margin-top: 3rem;
+    text-align: center;
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  document.querySelectorAll('.reveal-on-scroll').forEach((el) => observer.observe(el));
+</script>

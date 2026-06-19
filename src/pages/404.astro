@@ -1,0 +1,26 @@
+---
+import BaseLayout from '@/components/layout/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+---
+
+<BaseLayout title="Página no encontrada" description="La página que buscas no existe.">
+  <section class="not-found">
+    <div class="section-container not-found-inner">
+      <p class="code gradient-text">404</p>
+      <h1>Página no encontrada</h1>
+      <p class="desc">La página que buscas no existe o ha sido movida. Vuelve al inicio.</p>
+      <Button href="/" size="lg">Volver al inicio</Button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 80svh; display: flex; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .not-found-inner { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+  .code { font-family: var(--font-display); font-size: clamp(6rem, 20vw, 12rem); line-height: 1; }
+  h1 { font-size: clamp(1.5rem, 4vw, 2.5rem); color: var(--text-primary); }
+  .desc { font-size: 1rem; color: var(--text-secondary); max-width: 400px; }
+</style>

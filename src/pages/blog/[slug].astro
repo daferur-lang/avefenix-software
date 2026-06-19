@@ -1,0 +1,121 @@
+---
+import BaseLayout from '@/components/layout/BaseLayout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import { formatDate } from '@/lib/utils';
+
+export async function getStaticPaths() {
+  // Placeholder — reemplazar con datos de Sanity cuando esté configurado
+  return [
+    { params: { slug: '5-senales-web-renovacion' },         props: { slug: '5-senales-web-renovacion' } },
+    { params: { slug: 'automatizacion-gestoria-caso-real' }, props: { slug: 'automatizacion-gestoria-caso-real' } },
+    { params: { slug: 'seo-pymes-10-errores' },              props: { slug: 'seo-pymes-10-errores' } },
+    { params: { slug: 'software-medida-cuando' },            props: { slug: 'software-medida-cuando' } },
+  ];
+}
+
+interface Props { slug: string; }
+
+const { slug } = Astro.props;
+
+const post = {
+  title:       '5 señales de que tu web necesita una renovación urgente',
+  excerpt:     'Si tu web tarda más de 3 segundos en cargar o no se ve bien en móvil, estás perdiendo clientes cada día.',
+  category:    'Desarrollo' as const,
+  publishedAt: '2026-05-15',
+  readTime:    5,
+};
+---
+
+<BaseLayout title={post.title} description={post.excerpt}>
+  <article class="post-page">
+    <header class="post-header">
+      <div class="section-container post-header-inner">
+        <div class="post-meta">
+          <Badge variant="fire">{post.category}</Badge>
+          <span class="divider" aria-hidden="true">·</span>
+          <time datetime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+          <span class="divider" aria-hidden="true">·</span>
+          <span>{post.readTime} min de lectura</span>
+        </div>
+        <h1 class="post-title">{post.title}</h1>
+        <p class="post-excerpt">{post.excerpt}</p>
+      </div>
+    </header>
+
+    <div class="post-body section-container">
+      <div class="post-content">
+        <p>Este es el contenido del artículo. Cuando conectes Sanity, aquí aparecerá el Portable Text renderizado del post real.</p>
+        <p>El contenido se gestiona desde el Sanity Studio. Añade los artículos desde tu panel de CMS y aparecerán automáticamente aquí.</p>
+        <h2>¿Cómo configurar Sanity?</h2>
+        <p>Sigue las instrucciones del blueprint para crear el proyecto en sanity.io, configurar los schemas y conectar el cliente. Luego reemplaza el contenido estático por datos dinámicos.</p>
+      </div>
+
+      <aside class="post-sidebar">
+        <div class="sidebar-cta">
+          <h3>¿Te ha resultado útil?</h3>
+          <p>Podemos ayudarte a aplicar esto en tu negocio. Contacta con nosotros.</p>
+          <Button href="/contacto" size="md">Contactar</Button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="post-footer-cta section-container">
+      <Button href="/blog" variant="ghost">← Volver al blog</Button>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-page { padding-bottom: 6rem; }
+
+  .post-header {
+    padding: 9rem 0 4rem;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(154, 52, 18, 0.15) 0%, transparent 60%);
+  }
+
+  .post-header-inner { max-width: 720px; }
+
+  .post-meta {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+    font-family: var(--font-ui); font-size: 0.85rem; color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .divider { color: var(--border); }
+
+  .post-title { font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text-primary); margin-bottom: 1.25rem; }
+
+  .post-excerpt { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.7; }
+
+  .post-body {
+    padding-top: 3rem;
+    display: grid; grid-template-columns: 1fr;
+    gap: 3rem; max-width: 1100px;
+  }
+
+  @media (min-width: 1024px) {
+    .post-body { grid-template-columns: 1fr 300px; }
+  }
+
+  .post-content {
+    font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8;
+    display: flex; flex-direction: column; gap: 1.25rem; max-width: 720px;
+  }
+
+  .post-content h2 { font-size: clamp(1.5rem, 3vw, 2rem); color: var(--text-primary); margin-top: 0.5rem; }
+
+  .post-sidebar { position: sticky; top: 6rem; height: fit-content; }
+
+  .sidebar-cta {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-left: 3px solid var(--phoenix-fire);
+    border-radius: var(--radius-lg); padding: 1.75rem;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+
+  .sidebar-cta h3 { font-family: var(--font-ui); font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+  .sidebar-cta p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; }
+
+  .post-footer-cta { padding-top: 3rem; border-top: 1px solid var(--border); margin-top: 3rem; }
+</style>

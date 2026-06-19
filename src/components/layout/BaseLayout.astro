@@ -1,0 +1,78 @@
+---
+import '@/styles/globals.css';
+import '@/styles/animations.css';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+}
+
+const {
+  title = 'Avefenix Software',
+  description = 'Agencia tech especializada en desarrollo web, software a medida, automatizaciones empresariales y auditoría SEO. Transformamos tu negocio con tecnología.',
+  ogImage = '/og-default.png',
+  canonical,
+} = Astro.props;
+
+const siteUrl   = import.meta.env.PUBLIC_SITE_URL ?? 'https://avefenixsoftware.com';
+const pageTitle = title === 'Avefenix Software' ? title : `${title} | Avefenix Software`;
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteUrl).toString();
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content={canonicalUrl} />
+    <meta property="og:title"       content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image"       content={new URL(ogImage, siteUrl).toString()} />
+    <meta property="og:locale"      content="es_ES" />
+    <meta property="og:site_name"   content="Avefenix Software" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={new URL(ogImage, siteUrl).toString()} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- JSON-LD Organization -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Avefenix Software",
+      "url": siteUrl,
+      "logo": `${siteUrl}/favicon.svg`,
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "daferur@gmail.com"
+      },
+      "sameAs": []
+    })} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
