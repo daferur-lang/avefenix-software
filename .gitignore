@@ -25,3 +25,9 @@ pnpm-debug.log*
 
 .env.local
 .env
+
+# Firebase
+.firebase/
+functions/lib/
+functions/node_modules/
+.vercel/

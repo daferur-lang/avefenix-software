@@ -38,8 +38,13 @@ export default function ContactForm() {
 
   async function onSubmit(data: FormData) {
     setStatus('loading');
+    // URL de la Firebase Function — reemplaza con tu URL real tras el deploy
+    const FUNCTION_URL =
+      import.meta.env.PUBLIC_CONTACT_FUNCTION_URL ??
+      'https://europe-west1-TU_PROJECT_ID.cloudfunctions.net/contact';
+
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(FUNCTION_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
